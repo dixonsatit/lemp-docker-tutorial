@@ -2,22 +2,16 @@ FROM php:7-fpm-alpine
 
 MAINTAINER Sathit Seethaphon <dixonsatit@gmail.com>
 
-RUN apk add --no-cache \
-        freetype \
-        libpng \
-        libjpeg-turbo \
-        freetype-dev \
-        libpng-dev \
-        libjpeg-turbo-dev \
-        icu-dev \
-    && docker-php-ext-configure gd \
-        --with-gd \
-        --with-freetype-dir=/usr/include/ \
-        --with-png-dir=/usr/include/ \
-        --with-jpeg-dir=/usr/include/ \
-    && NPROC=$(grep -c ^processor /proc/cpuinfo 2>/dev/null || 1) \
-    && pecl install intl \
-    && docker-php-ext-install -j${NPROC} gd \
-    && docker-php-ext-install intl \
-    && docker-php-ext-install pdo_mysql \
-    && apk del --no-cache freetype-dev libpng-dev libjpeg-turbo-dev
+RUN apk upgrade --update && apk --no-cache add \
+    git autoconf file g++ gcc binutils isl libatomic libc-dev musl-dev make re2c libstdc++ libgcc libcurl binutils-libs mpc1 mpfr3 gmp libgomp coreutils freetype-dev libjpeg-turbo-dev libltdl libmcrypt-dev libpng-dev openssl-dev libxml2-dev expat-dev icu-dev libmemcached-dev \
+    && docker-php-ext-install iconv mysqli pdo pdo_mysql curl bcmath mcrypt mbstring json xml zip bz2 opcache intl  \
+    && docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ \
+    && docker-php-ext-install gd \
+    && git clone --branch php7 https://github.com/php-memcached-dev/php-memcached /usr/src/php/ext/memcached \
+    && cd /usr/src/php/ext/memcached \
+    && docker-php-ext-configure memcached --disable-memcached-sasl \
+    && docker-php-ext-install memcached
+
+EXPOSE 9000
+
+CMD ["php-fpm"]
