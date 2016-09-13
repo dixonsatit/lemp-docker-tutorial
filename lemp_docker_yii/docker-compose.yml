@@ -33,14 +33,21 @@ services:
     volumes:
       - ./nginx/conf/nginx.conf:/etc/nginx/conf/nginx.conf:ro
       - ./nginx/conf.d:/etc/nginx/conf.d:ro
+      - ./logs/nginx:/var/log/nginx
     volumes_from:
       - php
     ports:
       - 80:80
 
+  memcached:
+    image: memcached
+    container_name: lemp_memcached
+    ports:
+      - "11211:11211"
+
   pma:
     image: phpmyadmin/phpmyadmin
-    container_name: lemp-phpmyadmin
+    container_name: lemp_phpmyadmin
     restart: always
     ports:
       - "8000:80"
