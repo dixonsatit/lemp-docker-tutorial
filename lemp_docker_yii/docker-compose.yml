@@ -1,0 +1,46 @@
+version: '2'
+services:
+
+  db:
+    image: mariadb:10.1
+    container_name: lemp_mariadb
+    restart: always
+    volumes:
+      - ./mysql/initdb/:/docker-entrypoint-initdb.d
+      - ./mysql/data/:/var/lib/mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=123132123
+      - MYSQL_DATABASE=lemp_db
+      - MYSQL_USER=lemp
+      - MYSQL_PASSWORD=123456
+
+  php:
+    build: ./php
+    container_name: lemp_php-fpm
+    restart: always
+    volumes:
+      - ./www/:/var/www/html
+      - ./php/php-fpm.conf:/usr/local/etc/php-fpm.conf
+      - ./php/php.ini:/usr/local/etc/php/php.ini
+      - ./logs/php-fpm:/var/log/php-fpm
+    expose:
+      - "9000"
+
+  nginx:
+    image: nginx:stable-alpine
+    container_name: lemp_nginx
+    restart: always
+    volumes:
+      - ./nginx/conf/nginx.conf:/etc/nginx/conf/nginx.conf:ro
+      - ./nginx/conf.d:/etc/nginx/conf.d:ro
+    volumes_from:
+      - php
+    ports:
+      - 80:80
+
+  pma:
+    image: phpmyadmin/phpmyadmin
+    container_name: lemp-phpmyadmin
+    restart: always
+    ports:
+      - "8000:80"
