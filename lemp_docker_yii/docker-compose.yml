@@ -40,7 +40,7 @@ services:
       - 80:80
 
   memcached:
-    image: memcached
+    image: memcached:1.4.31-alpine
     container_name: lemp_memcached
     ports:
       - "11211:11211"
