@@ -34,10 +34,10 @@ services:
       - php
     ports:
       - 80:80
-
+      
   pma:
-    image: phpmyadmin/phpmyadmin
-    container_name: lemp-phpmyadmin
-    restart: always
-    ports:
-      - "8000:80"
+      image: phpmyadmin/phpmyadmin
+      container_name: lemp-phpmyadmin
+      restart: always
+      ports:
+        - "8000:80"
