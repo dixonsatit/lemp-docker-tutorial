@@ -3,7 +3,7 @@ services:
 
   php:
     image: php:apache
-    container_name: lemp_php7_apache
+    container_name: lamp_php7_apache
     restart: always
     volumes:
       - ./html/:/var/www/html
@@ -12,10 +12,10 @@ services:
 
   db:
     image: mariadb:latest
-    container_name: lemp_mariadb
+    container_name: lamp_mariadb
     restart: always
     environment:
-      - MYSQL_ROOT_PASSWORD=123132123
-      - MYSQL_DATABASE=lemp_db
-      - MYSQL_USER=lemp
-      - MYSQL_PASSWORD=123456
+      - MYSQL_ROOT_PASSWORD:db_123db2123
+      - MYSQL_DATABASE=lamp_db
+      - MYSQL_USER=lamp
+      - MYSQL_PASSWORD=_123db456
