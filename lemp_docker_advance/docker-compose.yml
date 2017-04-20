@@ -30,6 +30,7 @@ services:
     volumes:
       - ./nginx/conf/nginx.conf:/etc/nginx/conf/nginx.conf:ro
       - ./nginx/conf.d:/etc/nginx/conf.d:ro
+      - ./nginx/log:/var/log/nginx/
     volumes_from:
       - php
     ports:
