@@ -8,11 +8,13 @@ services:
     volumes:
       - ./mysql/initdb/:/docker-entrypoint-initdb.d
       - ./mysql/data/:/var/lib/mysql
+    ports:
+      - 3306:3306
     environment:
-      - MYSQL_ROOT_PASSWORD=123132123
-      - MYSQL_DATABASE=lemp_db
-      - MYSQL_USER=lemp
-      - MYSQL_PASSWORD=123456
+      - MYSQL_ROOT_PASSWORD:dB_123dbase
+      - MYSQL_DATABASE:lemp_db
+      - MYSQL_USER:lemp
+      - MYSQL_PASSWORD:lemp_123db456
 
   php:
     build: ./
