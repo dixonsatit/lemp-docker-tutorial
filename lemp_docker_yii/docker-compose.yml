@@ -9,10 +9,10 @@ services:
       - ./mysql/initdb/:/docker-entrypoint-initdb.d
       - ./mysql/data/:/var/lib/mysql
     environment:
-      - MYSQL_ROOT_PASSWORD=123132123
-      - MYSQL_DATABASE=lemp_db
-      - MYSQL_USER=lemp
-      - MYSQL_PASSWORD=123456
+      - MYSQL_ROOT_PASSWORD:root_db_2123
+      - MYSQL_DATABASE:lemp_db
+      - MYSQL_USER:lemp
+      - MYSQL_PASSWORD:pw_123db456
 
   php:
     build: ./php
